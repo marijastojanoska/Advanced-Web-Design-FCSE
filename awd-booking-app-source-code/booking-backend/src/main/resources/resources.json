@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Luxury Hotel Room",
+    "city": "New York",
+    "country": "USA",
+    "imageUrl": "1.jpg",
+    "pricePerNight": 200.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Cozy Apartment",
+    "city": "San Francisco",
+    "country": "USA",
+    "imageUrl": "2.jpg",
+    "pricePerNight": 150.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Beachfront Villa",
+    "city": "Miami",
+    "country": "USA",
+    "imageUrl": "3.jpg",
+    "pricePerNight": 300.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Executive Suite",
+    "city": "Chicago",
+    "country": "USA",
+    "imageUrl": "4.jpg",
+    "pricePerNight": 250.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Modern Loft",
+    "city": "Los Angeles",
+    "country": "USA",
+    "imageUrl": "5.jpg",
+    "pricePerNight": 180.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Mountain Retreat",
+    "city": "Denver",
+    "country": "USA",
+    "imageUrl": "6.jpg",
+    "pricePerNight": 220.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Penthouse Suite",
+    "city": "Toronto",
+    "country": "Canada",
+    "imageUrl": "7.jpg",
+    "pricePerNight": 280.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "City View Apartment",
+    "city": "Vancouver",
+    "country": "Canada",
+    "imageUrl": "8.jpg",
+    "pricePerNight": 190.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Beach House",
+    "city": "Sydney",
+    "country": "Australia",
+    "imageUrl": "9.jpg",
+    "pricePerNight": 320.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Skyline Suite",
+    "city": "Tokyo",
+    "country": "Japan",
+    "imageUrl": "10.jpg",
+    "pricePerNight": 400.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Chic Studio",
+    "city": "Paris",
+    "country": "France",
+    "imageUrl": "11.jpg",
+    "pricePerNight": 170.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Seaside Villa",
+    "city": "Athens",
+    "country": "Greece",
+    "imageUrl": "12.jpg",
+    "pricePerNight": 280.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Deluxe Room",
+    "city": "Rome",
+    "country": "Italy",
+    "imageUrl": "13.jpg",
+    "pricePerNight": 250.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Artistic Loft",
+    "city": "Berlin",
+    "country": "Germany",
+    "imageUrl": "14.jpg",
+    "pricePerNight": 180.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Lakefront Villa",
+    "city": "Geneva",
+    "country": "Switzerland",
+    "imageUrl": "15.jpg",
+    "pricePerNight": 300.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Luxury Suite",
+    "city": "London",
+    "country": "UK",
+    "imageUrl": "16.jpg",
+    "pricePerNight": 350.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Riverside Apartment",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "imageUrl": "17.jpg",
+    "pricePerNight": 200.0,
+    "category": "APARTMENT"
+  },
+  {
+    "name": "Private Island Villa",
+    "city": "Nassau",
+    "country": "Bahamas",
+    "imageUrl": "18.jpg",
+    "pricePerNight": 800.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Historic Hotel Room",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "imageUrl": "19.jpg",
+    "pricePerNight": 180.0,
+    "category": "HOTEL_ROOM"
+  },
+  {
+    "name": "Ski Chalet",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "imageUrl": "20.jpg",
+    "pricePerNight": 280.0,
+    "category": "VILLA"
+  },
+  {
+    "name": "Hotel Alexandar Palace",
+    "city": "Skopje",
+    "country": "Macedonia",
+    "imageUrl": "21.jpg",
+    "pricePerNight": 100.0,
+    "category": "HOTEL_ROOM"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "username": "user",
+    "resourceId": 1,
+    "dateFrom": "2024-07-01",
+    "dateTo": "2024-07-10"
+  },
+  {
+    "username": "user",
+    "resourceId": 2,
+    "dateFrom": "2024-08-15",
+    "dateTo": "2024-08-20"
+  }
+]

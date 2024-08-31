@@ -27,6 +27,8 @@ public class Resource {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("resource")
     private List<Reservation> reservations = new ArrayList<>();
+    @ManyToOne
+    private User owner;
 
     public Resource(String name, String city, String country, String imageUrl, Double price, Category category) {
         this.name = name;

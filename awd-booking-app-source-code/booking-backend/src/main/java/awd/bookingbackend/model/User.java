@@ -24,6 +24,7 @@ public class User {
     private Set<Reservation> reservations = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+    private Boolean loggedIn = false;
 
     public User(String username, String password) {
         this.username = username;

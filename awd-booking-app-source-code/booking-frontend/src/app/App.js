@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, {Component} from "react";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Service from '../service/service';
 import ReservationsForUser from "../reservation/ReservationsForUser";
 import Resources from "../resource/Resources";
@@ -10,6 +10,8 @@ import Home from "../home/Home";
 import ReserveForm from "../reservation/ReserveForm";
 import Footer from "../footer/footer";
 import './App.css'
+import ResourceManager from "../resource/ResourceManager";
+import RegisterForm from "../register/RegisterForm";
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +26,7 @@ class App extends Component {
             currentResource: null
         };
     }
+
 
     componentDidMount() {
         const storedUser = localStorage.getItem('currentUser');
@@ -42,7 +45,7 @@ class App extends Component {
                 const sortedResources = response.data.sort((a, b) => a.pricePerNight - b.pricePerNight);
                 // Select top 10 cheapest resources
                 const top10CheapestResources = sortedResources.slice(0, 10);
-                this.setState({ resources: top10CheapestResources });
+                this.setState({resources: top10CheapestResources});
                 return response;
             })
             .catch((error) => {
@@ -68,6 +71,7 @@ class App extends Component {
     }
 
     logout = () => {
+        Service.logout();
         localStorage.removeItem('currentUser');
         this.setState({
             currentUser: null,
@@ -108,24 +112,22 @@ class App extends Component {
     }
 
     reserve = (resourceId, dateFrom, dateTo, onSuccess, onError) => {
-        const { currentUser } = this.state;
+        const {currentUser} = this.state;
         const today = new Date().toISOString().split('T')[0];
 
-        // Check if dates are in the past
         if (dateFrom < today || dateTo < today) {
             const errorMessage = "Reservation dates cannot be in the past.";
             console.error(errorMessage);
-            this.setState({ reserveError: errorMessage }, () => {
+            this.setState({reserveError: errorMessage}, () => {
                 onError(errorMessage);
             });
             return;
         }
 
-        // Check if dateFrom is after dateTo
         if (dateFrom > dateTo) {
             const errorMessage = "Start date must be on or before end date.";
             console.error(errorMessage);
-            this.setState({ reserveError: errorMessage }, () => {
+            this.setState({reserveError: errorMessage}, () => {
                 onError(errorMessage);
             });
             return;
@@ -135,21 +137,21 @@ class App extends Component {
             const username = currentUser.username;
             Service.reserve(username, resourceId, dateFrom, dateTo)
                 .then((response) => {
-                    this.setState({ currentReservation: response.data, reserveError: null }, () => {
+                    this.setState({currentReservation: response.data, reserveError: null}, () => {
                         this.fetchReservationsForUser(onSuccess);
                     });
                 })
                 .catch((error) => {
                     console.error("Error making reservation for these dates:", error);
                     const errorMessage = error.response?.data?.message || "Error making reservation";
-                    this.setState({ reserveError: errorMessage }, () => {
+                    this.setState({reserveError: errorMessage}, () => {
                         onError(errorMessage);
                     });
                 });
         } else {
             const errorMessage = "User is not logged in";
             console.error(errorMessage);
-            this.setState({ reserveError: errorMessage }, () => {
+            this.setState({reserveError: errorMessage}, () => {
                 onError(errorMessage);
             });
         }
@@ -172,8 +174,41 @@ class App extends Component {
         }
     }
 
+    createResource = (name, city, country, imageUrl, pricePerNight, category) => {
+        return Service.createResource(name, city, country, imageUrl, pricePerNight, category)
+            .then(() => {
+                this.fetchResources();
+            })
+            .catch((error) => {
+                console.error('Error creating resource:', error);
+            });
+    }
+
+    editResource = (id, name, city, country, imageUrl, pricePerNight, category) => {
+        return Service.editResource(id, name, city, country, imageUrl, pricePerNight, category)
+            .then(() => {
+                this.fetchResources();
+            })
+            .catch((error) => {
+                console.error('Error updating resource:', error);
+            });
+    }
+
+    deleteResource = (id) => {
+        return Service.deleteResource(id)
+            .then(() => {
+                alert('Resource deleted successfully!');
+                this.fetchResources();
+            })
+            .catch((error) => {
+                console.error('Error deleting resource:', error);
+                alert('Failed to delete resource.');
+            });
+    }
+
     render() {
         const {currentUser, resources, reservationsForUser, reserveError, loginError, currentResource} = this.state;
+        const showEditDeleteButtons = currentUser && currentResource && currentUser.username === currentResource.owner.username;
 
         return (
             <Router>
@@ -194,9 +229,34 @@ class App extends Component {
                             />
                         }/>
                         <Route path="/login"
-                               element={<LoginForm login={this.login} register={this.register} error={loginError}/>}/>
-                        <Route path="/resource/:id" element={<ResourceDetails getResource={this.getCurrentResource}
-                                                                              resource={currentResource}/>}/>
+                               element={<LoginForm login={this.login} error={loginError}/>}/>
+
+                        <Route path="/register"
+                               element={<RegisterForm register={this.register} />} />
+
+                        <Route path="/resource/:id" element={
+                            <ResourceDetails
+                                getResource={this.getCurrentResource}
+                                resource={this.state.currentResource}
+                                deleteResource={this.deleteResource}
+                                showEditDeleteButtons={showEditDeleteButtons}
+                            />
+                        }/>
+
+                        <Route path="/edit-resource/:resourceId" element={
+                            <ResourceManager
+                                mode="edit"
+                                fetchResource={this.getCurrentResource}
+                                editResource={this.editResource}
+                                deleteResource={this.deleteResource}
+                            />
+                        }/>
+                        <Route path="/create-resource" element={
+                            <ResourceManager
+                                mode="create"
+                                createResource={this.createResource}
+                            />
+                        }/>
                     </Routes>
                 </main>
                 <Footer/>

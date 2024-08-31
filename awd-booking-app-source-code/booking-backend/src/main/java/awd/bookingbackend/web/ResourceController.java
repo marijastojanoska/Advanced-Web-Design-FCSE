@@ -1,9 +1,11 @@
 package awd.bookingbackend.web;
 
+import awd.bookingbackend.model.dto.ResourceDto;
 import awd.bookingbackend.model.enumeration.Category;
 import awd.bookingbackend.model.Resource;
 import awd.bookingbackend.service.ResourceService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -35,6 +37,26 @@ public class ResourceController {
                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
         return resourceService.filterByCityAndDate(city, dateFrom, dateTo);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Resource> createResource(@RequestBody ResourceDto dto) {
+        Resource createdResource = resourceService.createResource(dto);
+        return ResponseEntity.ok(createdResource);
+    }
+
+    @PutMapping("/edit/{resourceId}")
+    public ResponseEntity<Resource> editResource(
+            @PathVariable Long resourceId,
+            @RequestBody ResourceDto dto) {
+        Resource updatedResource = resourceService.editResource(resourceId, dto);
+        return ResponseEntity.ok(updatedResource);
+    }
+
+    @DeleteMapping("/delete/{resourceId}")
+    public ResponseEntity<Void> deleteResource(@PathVariable Long resourceId) {
+        resourceService.deleteResource(resourceId);
+        return ResponseEntity.noContent().build();
     }
 
 }

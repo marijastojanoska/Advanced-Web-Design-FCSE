@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import Select from 'react-select';
 import Service from '../service/service';
+import ResourceManager from "./ResourceManager";
 
 const Resources = ({currentUser, setResources}) => {
     const navigate = useNavigate();
@@ -105,8 +106,27 @@ const Resources = ({currentUser, setResources}) => {
         label: cityName,
     }));
 
+    const handleCreateClick = () => {
+        navigate('/create-resource');
+    };
+
+    const handleEditClick = (resourceId) => {
+        navigate(`/edit-resource/${resourceId}`);
+    };
+
     return (
         <div className="container-fluid mt-3">
+            <div className="row mb-3">
+                <div className="col">
+                    {currentUser && (
+                        <button
+                            className="btn bg-white"
+                            onClick={handleCreateClick}>
+                            Create New Resource
+                        </button>
+                    )}
+                </div>
+            </div>
             <div className="row justify-content-center mb-3">
                 <div className="col-lg-2 col-md-8 col-sm-10 position-relative">
                     <label htmlFor="cityInput" className="form-label">City</label>
@@ -150,8 +170,10 @@ const Resources = ({currentUser, setResources}) => {
                 {resources.map((resource) => (
                     <div className="col-3 p-3 m-3 rounded-3" style={{backgroundColor: "#fff"}}
                          key={resource.id}>
-                        <img src={`${process.env.PUBLIC_URL}/images/${resource.imageUrl}`} alt={resource.name}
-                             className="w-100" style={{height: "200px"}}/>
+                        <img
+                            src={!resource.imageUrl.startsWith('http') ? `${process.env.PUBLIC_URL}/images/${resource.imageUrl}` : resource.imageUrl}
+                            alt={resource.name}
+                            className="w-100" style={{height: "200px"}}/>
                         <h3 className="resource-title">{resource.name}</h3>
                         <p><strong>Price:</strong> {resource.pricePerNight}$</p>
                         <p><strong>City:</strong> {resource.city}</p>

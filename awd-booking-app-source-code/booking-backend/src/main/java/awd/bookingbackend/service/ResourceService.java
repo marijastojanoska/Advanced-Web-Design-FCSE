@@ -1,22 +1,53 @@
 package awd.bookingbackend.service;
 
+import awd.bookingbackend.model.dto.ResourceDto;
 import awd.bookingbackend.model.enumeration.Category;
 import awd.bookingbackend.model.Resource;
 import awd.bookingbackend.repository.ResourceRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ResourceService {
     private final ResourceRepository resourceRepository;
+    private final UserService userService;
 
-    public ResourceService(ResourceRepository resourceRepository) {
+    public ResourceService(ResourceRepository resourceRepository, UserService userService) {
         this.resourceRepository = resourceRepository;
+        this.userService = userService;
     }
+
+    public Resource createResource(ResourceDto dto) {
+        Resource resource = new Resource(
+                dto.getName(),
+                dto.getCity(),
+                dto.getCountry(),
+                dto.getImageUrl(),
+                dto.getPricePerNight(),
+                dto.getCategory()
+        );
+        resource.setOwner(userService.findLoggedInUser());
+        return this.resourceRepository.save(resource);
+    }
+
+    public Resource editResource(Long resourceId, ResourceDto dto) {
+        Resource resource = resourceRepository.findById(resourceId).get();
+        resource.setName(dto.getName());
+        resource.setCity(dto.getCity());
+        resource.setCountry(dto.getCountry());
+        resource.setImageUrl(dto.getImageUrl());
+        resource.setPricePerNight(dto.getPricePerNight());
+        resource.setCategory(dto.getCategory());
+        return this.resourceRepository.save(resource);
+    }
+
+    public void deleteResource(Long resourceId) {
+        resourceRepository.deleteById(resourceId);
+    }
+
 
     public List<Resource> findByCategory(Category category) {
         return resourceRepository.findByCategory(category);
@@ -53,7 +84,7 @@ public class ResourceService {
         return resource.getReservations().stream()
                 .anyMatch(reservation ->
                         (dateFrom.isEqual(reservation.getDateFrom()) || dateFrom.isEqual(reservation.getDateTo())) ||
-                        (dateFrom.isBefore(reservation.getDateTo()) && dateTo.isAfter(reservation.getDateFrom())));
+                                (dateFrom.isBefore(reservation.getDateTo()) && dateTo.isAfter(reservation.getDateFrom())));
     }
 
 

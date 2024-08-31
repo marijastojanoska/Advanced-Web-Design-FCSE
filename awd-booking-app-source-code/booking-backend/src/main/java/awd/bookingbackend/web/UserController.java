@@ -23,6 +23,11 @@ public class UserController {
         return userService.register(userDto);
     }
 
+    @GetMapping("/loggedIn")
+    public User getLoggedInUser() {
+        return userService.findLoggedInUser();
+    }
+
     @PostMapping("/login")
     public User login(@RequestBody UserDto userDto) {
         return userService.login(userDto.getUsername(), userDto.getPassword());

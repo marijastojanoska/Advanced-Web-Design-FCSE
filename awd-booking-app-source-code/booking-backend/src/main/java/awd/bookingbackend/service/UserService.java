@@ -5,6 +5,7 @@ import awd.bookingbackend.model.dto.UserDto;
 import awd.bookingbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,12 +17,27 @@ public class UserService {
     }
 
     public User register(UserDto userDto) {
-        User user = new User(userDto.getUsername(),userDto.getPassword());
+        List<User> users = this.userRepository.findAll();
+        users.forEach(u -> u.setLoggedIn(false));
+        userRepository.saveAll(users);
+        User user = new User(userDto.getUsername(), userDto.getPassword());
+        user.setLoggedIn(true);
         return userRepository.save(user);
     }
 
     public User login(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password).get();
+        List<User> users = this.userRepository.findAll();
+        users.forEach(u -> u.setLoggedIn(false));
+        userRepository.saveAll(users);
+        User user = userRepository.findByUsernameAndPassword(username, password).get();
+        user.setLoggedIn(true);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User findLoggedInUser() {
+        List<User> loggedInUsers = this.userRepository.findAllByLoggedInTrue();
+        return loggedInUsers.isEmpty() ? null : loggedInUsers.get(0);
     }
 
     public User findByUsername(String username) {
@@ -29,7 +45,9 @@ public class UserService {
     }
 
     public void logout() {
-        //todo
+        List<User> users = this.userRepository.findAll();
+        users.forEach(u -> u.setLoggedIn(false));
+        userRepository.saveAll(users);
     }
 }
 

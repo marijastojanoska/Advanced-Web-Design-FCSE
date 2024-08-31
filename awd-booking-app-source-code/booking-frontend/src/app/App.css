@@ -152,3 +152,54 @@ strong {
     color: #d4cfb0;
 }
 
+.resource-manager-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.resource-manager-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resource-manager-form-field {
+    margin-bottom: 15px;
+}
+
+.resource-manager-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.resource-manager-form input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.resource-manager-submit-button {
+    padding: 10px;
+    background-color: #95714D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.resource-manager-submit-button:hover {
+    background-color: #d4cfb0;
+}
+
+

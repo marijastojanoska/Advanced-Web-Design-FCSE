@@ -35,7 +35,36 @@ const Service = {
     },
     fetchResourceById: (id) => {
         return axios.get(`/resources/${id}`);
-    }
+    },
+    createResource: (name, city, country, imageUrl, pricePerNight, category) => {
+        return axios.post('/resources/create', {
+            name: name,
+            city: city,
+            country: country,
+            imageUrl: imageUrl,
+            pricePerNight: pricePerNight,
+            category: category,
+        });
+    },
+    editResource: (resourceId, name, city, country, imageUrl, pricePerNight, category) => {
+        return axios.put(`/resources/edit/${resourceId}`, {
+            name: name,
+            city: city,
+            country: country,
+            imageUrl: imageUrl,
+            pricePerNight: pricePerNight,
+            category: category,
+        });
+    },
+    deleteResource: (resourceId) => {
+        return axios.delete(`/resources/delete/${resourceId}`);
+    },
+    getLoggedInUser: () => {
+        return axios.get(`/users/loggedIn`);
+    },
+    logout: () => {
+        return axios.post(`/users/logout`);
+    },
 }
 
 export default Service;

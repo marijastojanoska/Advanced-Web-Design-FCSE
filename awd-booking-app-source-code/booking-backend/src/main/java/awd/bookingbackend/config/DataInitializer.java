@@ -54,6 +54,7 @@ public class DataInitializer {
                         .map(dto -> new Resource(dto.getName(), dto.getCity(), dto.getCountry(),
                                 dto.getImageUrl(), dto.getPricePerNight(), dto.getCategory()))
                         .collect(Collectors.toList());
+                resources.forEach(r->r.setOwner(userRepository.findByUsername("user").get()));
                 resourceRepository.saveAll(resources);
             }
 
